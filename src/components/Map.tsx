@@ -49,7 +49,8 @@ const Map = ({ center = [36.8219, -1.2921], zoom = 12, height = '300px' }: MapPr
 
       // Add error handler
       map.current.on('error', (e) => {
-        if (e.error?.status === 401) {
+        // Check for authentication error in a type-safe way
+        if (e.error && typeof e.error === 'object' && 'status' in e.error && e.error.status === 401) {
           setIsTokenValid(false);
           localStorage.removeItem('mapbox-token');
           setMapboxToken(null);
