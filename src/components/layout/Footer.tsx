@@ -127,7 +127,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <Mail size={18} className="mr-3 mt-1 text-primary" />
-                <span className="text-muted-foreground">info@ujenzibora.com</span>
+                <span className="text-muted-foreground">info@MjengoSafi.com</span>
               </li>
               <li className="flex items-start">
                 <MapPin size={18} className="mr-3 mt-1 text-primary" />
@@ -142,7 +142,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} UjenziBora. All Rights Reserved.
+            © {new Date().getFullYear()} MjengoSafi. All Rights Reserved.
           </p>
         </div>
       </div>

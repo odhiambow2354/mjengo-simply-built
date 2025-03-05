@@ -17,7 +17,7 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
             <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              About Ujenzi Bora
+              About Mjengo Safi
             </div>
             
             <h2 className="text-3xl md:text-4xl font-semibold mb-6 leading-tight">
@@ -26,7 +26,7 @@ const About = () => {
             </h2>
             
             <p className="text-muted-foreground mb-6">
-              At UjenziBora, we combine innovative design with quality construction to create spaces that inspire. 
+              At MjengoSafi, we combine innovative design with quality construction to create spaces that inspire. 
               With years of industry experience, our team of professionals is dedicated to turning your vision into reality.
             </p>
             

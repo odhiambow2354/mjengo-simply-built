@@ -9,7 +9,7 @@ const testimonials = [
     name: "John Smith",
     position: "Homeowner",
     avatar: "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1550&q=80",
-    quote: "UjenziBora transformed our vision into reality. Their attention to detail and commitment to quality exceeded our expectations.",
+    quote: "MjengoSafi transformed our vision into reality. Their attention to detail and commitment to quality exceeded our expectations.",
     rating: 5,
     project: "Modern Residential Villa"
   },
@@ -18,7 +18,7 @@ const testimonials = [
     name: "Sarah Johnson",
     position: "CEO, TechSpace Inc.",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80",
-    quote: "Working with UjenziBora on our office complex was a seamless experience. They delivered on time and within budget.",
+    quote: "Working with MjengoSafi on our office complex was a seamless experience. They delivered on time and within budget.",
     rating: 5,
     project: "Corporate Office Complex"
   },
@@ -27,7 +27,7 @@ const testimonials = [
     name: "Michael Chen",
     position: "Property Developer",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1550&q=80",
-    quote: "The team at UjenziBora are true professionals. Their expertise in construction and project management is unmatched.",
+    quote: "The team at MjengoSafi are true professionals. Their expertise in construction and project management is unmatched.",
     rating: 5,
     project: "Luxury Apartment Complex"
   },
@@ -36,7 +36,7 @@ const testimonials = [
     name: "Emily Rodriguez",
     position: "Hotel Manager",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1550&q=80",
-    quote: "The renovation of our boutique hotel was handled with such care and precision. UjenziBora understood our vision perfectly.",
+    quote: "The renovation of our boutique hotel was handled with such care and precision. MjengoSafi understood our vision perfectly.",
     rating: 5,
     project: "Boutique Hotel Renovation"
   }

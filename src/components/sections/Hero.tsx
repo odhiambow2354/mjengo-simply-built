@@ -31,7 +31,7 @@ const Hero = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white font-semibold leading-tight mb-6 tracking-tight">
-            Design, Costing, Construction 
+            Design, Construct 
             <span className="block">Making Your Dream Home a Reality</span>
           </h1>
           
