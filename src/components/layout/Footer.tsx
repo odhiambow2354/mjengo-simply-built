@@ -37,7 +37,7 @@ const Footer = () => {
                 <Twitter size={18} />
               </a>
               <a 
-                href="#" 
+                href="https://www.linkedin.com/in/wycliffe-omondi-933601266/" 
                 className="h-10 w-10 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-600 hover:text-primary hover:border-primary transition-colors"
                 aria-label="LinkedIn"
               >
