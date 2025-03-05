@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ArrowRight, Home, Building, Hotel, School, Wrench, HeartHandshake, 
-  Construction, PencilRuler, Sofa, PaintBucket, LayoutPlanbarChart, Layout, Hammer } from "lucide-react";
+  Construction, PencilRuler, Sofa, PaintBucket, LayoutDashboard, Layout, Hammer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [

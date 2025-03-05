@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { ArrowRight, Home, Building, Hotel, School, Wrench, HeartHandshake, 
   Construction, ConstructionIcon, PencilRuler, Sofa, PaintBucket, 
-  LayoutPlanbarChart, Layout, Hammer } from "lucide-react";
+  LayoutDashboard, Layout, Hammer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -76,7 +75,7 @@ const services = [
     id: "preconstruction",
     title: "Pre-Construction",
     description: "Engineering and pre-construction planning services to ensure your project starts on the right foot.",
-    icon: LayoutPlanbarChart,
+    icon: LayoutDashboard,
   },
   {
     id: "designbuild",
