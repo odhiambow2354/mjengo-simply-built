@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: 
+## Live App: https://mjengo-simply-built.vercel.app/ 
 
 ## How can I edit this code?
 
