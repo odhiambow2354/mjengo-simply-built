@@ -38,7 +38,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <NavLink to="/" className="text-foreground font-display text-2xl font-medium">
-          Ujenzi<span className="text-primary font-semibold">Bora</span>
+          Mjengo<span className="text-primary font-semibold">Safi</span>
         </NavLink>
 
         {/* Desktop Navigation */}

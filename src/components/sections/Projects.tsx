@@ -45,10 +45,31 @@ const projects = [
     category: "Commercial",
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625",
     description: "Major expansion of a shopping mall, adding new retail spaces and modernizing existing areas."
+  },
+  {
+    id: 7,
+    title: "Three-Bedroom Bungalow",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
+    description: "Affordable and well-designed three-bedroom bungalow perfect for a small family."
+  },
+  {
+    id: 8,
+    title: "Two-Story Modern Home",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c",
+    description: "Contemporary two-story home with sleek finishes and practical living spaces for the average Kenyan family."
+  },
+  {
+    id: 9,
+    title: "Maisonette in Gated Community",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+    description: "Beautiful maisonette design for middle-income families, featuring a modern kitchen and spacious living areas."
   }
 ];
 
-const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional"];
+const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional", "Personal Homes"];
 
 const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
   return (

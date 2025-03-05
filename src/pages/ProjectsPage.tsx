@@ -85,10 +85,50 @@ const projects = [
     location: "Eldoret, Kenya",
     year: "2023",
     details: "A new 100-bed hospital wing featuring specialized departments, surgical suites, and patient recovery rooms. The design focuses on infection control, natural light, and creating a healing environment."
+  },
+  {
+    id: 9,
+    title: "Three-Bedroom Bungalow",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
+    description: "Affordable and well-designed three-bedroom bungalow perfect for a small family.",
+    location: "Rongai, Kenya",
+    year: "2023",
+    details: "This 3-bedroom bungalow was designed for a young family in Rongai. The project focused on efficient use of space, low maintenance materials, and cost-effective construction methods without compromising on quality and aesthetics."
+  },
+  {
+    id: 10,
+    title: "Two-Story Modern Home",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c",
+    description: "Contemporary two-story home with sleek finishes and practical living spaces for the average Kenyan family.",
+    location: "Kitengela, Kenya",
+    year: "2022",
+    details: "A beautiful 4-bedroom two-story house with a modern open floor plan, designed to maximize natural light and cross-ventilation. The construction used locally available materials and labor, making it an affordable yet stylish option for middle-income Kenyan families."
+  },
+  {
+    id: 11,
+    title: "Maisonette in Gated Community",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+    description: "Beautiful maisonette design for middle-income families, featuring a modern kitchen and spacious living areas.",
+    location: "Syokimau, Kenya",
+    year: "2022",
+    details: "This 3-bedroom maisonette was built as part of a gated community development. The design focuses on privacy, security, and community living with shared amenities like gardens and playgrounds. The construction emphasized energy efficiency and water conservation."
+  },
+  {
+    id: 12,
+    title: "Studio Apartments",
+    category: "Personal Homes",
+    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688",
+    description: "Cost-effective studio apartments with modern amenities for young professionals and students.",
+    location: "Nairobi, Kenya",
+    year: "2023",
+    details: "A block of 20 studio apartments designed for rental income with young professionals and students in mind. The units maximize space efficiency while maintaining comfort and style. The project included communal facilities and security features."
   }
 ];
 
-const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional"];
+const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional", "Personal Homes"];
 
 const ProjectsPage = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -155,11 +195,11 @@ const ProjectsPage = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <div className="lg:col-span-2">
-                  <div className="rounded-lg overflow-hidden">
+                  <div className="rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
                     <img 
                       src={selectedProject.image} 
                       alt={selectedProject.title}
-                      className="w-full h-[400px] object-cover object-center"
+                      className="w-full h-[400px] object-cover object-center transition-all duration-700 hover:scale-105"
                     />
                   </div>
                 </div>
@@ -206,11 +246,11 @@ const ProjectsPage = () => {
                           window.scrollTo(0, 0);
                         }}
                       >
-                        <div className="rounded-lg overflow-hidden aspect-[4/3] mb-3">
+                        <div className="rounded-lg overflow-hidden aspect-[4/3] mb-3 shadow transition-all duration-300 group-hover:shadow-md">
                           <img 
                             src={project.image} 
                             alt={project.title}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                           />
                         </div>
                         <h3 className="font-medium group-hover:text-primary transition-colors">{project.title}</h3>
@@ -226,21 +266,21 @@ const ProjectsPage = () => {
                 visibleProjects.map(project => (
                   <div 
                     key={project.id}
-                    className="group cursor-pointer"
+                    className="group cursor-pointer transition-all duration-300 hover:-translate-y-2"
                     onClick={() => setSelectedProject(project)}
                   >
-                    <div className="rounded-lg overflow-hidden aspect-[4/3] mb-4">
+                    <div className="rounded-lg overflow-hidden aspect-[4/3] mb-4 shadow-sm transition-all duration-300 group-hover:shadow-lg">
                       <img 
                         src={project.image} 
                         alt={project.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                       />
                     </div>
                     <span className="text-sm text-primary font-medium">{project.category}</span>
                     <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
                     <p className="text-muted-foreground mb-4">{project.description}</p>
                     <button className="inline-flex items-center text-primary font-medium text-sm group-hover:underline">
-                      View Project <ArrowRight size={14} className="ml-1" />
+                      View Project <ArrowRight size={14} className="ml-1 group-hover:ml-2 transition-all" />
                     </button>
                   </div>
                 ))
