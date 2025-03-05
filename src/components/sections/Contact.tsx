@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Map from "@/components/Map";
 
 const ContactCard = ({ icon: Icon, title, content }: { icon: any; title: string; content: string | React.ReactNode }) => {
   return (
@@ -95,10 +96,7 @@ const Contact = () => {
             </div>
             
             <div className="bg-white rounded-lg overflow-hidden h-[300px] shadow-sm border border-gray-100">
-              {/* Insert map component or iframe here */}
-              <div className="bg-gray-200 h-full w-full flex items-center justify-center">
-                <p className="text-muted-foreground">Map Location</p>
-              </div>
+              <Map center={[36.8219, -1.2921]} zoom={13} height="300px" />
             </div>
           </div>
           
