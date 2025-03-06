@@ -1,13 +1,16 @@
 
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -31,6 +34,22 @@ const Navbar = () => {
       description: "Please fill out the form to receive a detailed quote for your project.",
       duration: 5000,
     });
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/projects?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  const toggleSearch = () => {
+    setSearchOpen(!searchOpen);
+    if (searchOpen) {
+      setSearchQuery("");
+    }
   };
 
   const navItems = [
@@ -69,6 +88,13 @@ const Navbar = () => {
               {item.name}
             </NavLink>
           ))}
+          <button
+            onClick={toggleSearch}
+            className="text-foreground hover:text-primary transition-colors"
+            aria-label="Search"
+          >
+            <Search size={20} />
+          </button>
           <Button 
             className="ml-2 px-6 py-2 bg-primary hover:bg-primary/90 transition-all text-white"
             onClick={handleGetQuote}
@@ -78,16 +104,42 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </Button>
+        <div className="flex items-center space-x-4 md:hidden">
+          <button
+            onClick={toggleSearch}
+            className="text-foreground hover:text-primary transition-colors"
+            aria-label="Search"
+          >
+            <Search size={20} />
+          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
+        </div>
       </div>
+
+      {/* Search Overlay */}
+      {searchOpen && (
+        <div className="absolute top-full left-0 right-0 bg-white shadow-md py-4 px-6 animate-in fade-in slide-in-from-top-5 z-50">
+          <form onSubmit={handleSearch} className="container flex gap-2">
+            <Input
+              type="search"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-grow"
+              autoFocus
+            />
+            <Button type="submit">Search</Button>
+            <Button variant="outline" type="button" onClick={toggleSearch}>Cancel</Button>
+          </form>
+        </div>
+      )}
 
       {/* Mobile Navigation */}
       <div 

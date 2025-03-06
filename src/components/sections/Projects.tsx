@@ -88,7 +88,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
         <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
         <p className="text-white/80 text-sm mb-4">{project.description}</p>
         <Link 
-          to={`/project-gallery?id=${project.id}`} 
+          to={`/projects?id=${project.id}`} 
           className="inline-flex items-center text-white font-medium text-sm hover:underline"
         >
           View Project <ArrowRight size={14} className="ml-1" />

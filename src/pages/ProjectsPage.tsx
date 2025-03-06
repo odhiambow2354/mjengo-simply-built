@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { ArrowRight, ArrowLeft, Filter } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const projects = [
@@ -131,24 +132,56 @@ const projects = [
 const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional", "Personal Homes"];
 
 const ProjectsPage = () => {
+  const [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleProjects, setVisibleProjects] = useState(projects);
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    // Filter projects based on selected category
-    if (activeCategory === "All") {
-      setVisibleProjects(projects);
-    } else {
-      setVisibleProjects(projects.filter(project => project.category === activeCategory));
+    // Check for project ID in URL
+    const projectId = searchParams.get("id");
+    if (projectId) {
+      const project = projects.find(p => p.id === Number(projectId));
+      if (project) {
+        setSelectedProject(project);
+      }
     }
     
-    // Reset selected project when category changes
-    setSelectedProject(null);
+    // Check for search query in URL
+    const search = searchParams.get("search");
+    if (search) {
+      setSearchQuery(search);
+    }
     
-    // Scroll to top when changing categories
+    // Scroll to top when page loads
     window.scrollTo(0, 0);
-  }, [activeCategory]);
+  }, [searchParams]);
+
+  useEffect(() => {
+    let filtered = projects;
+    
+    // Filter by category
+    if (activeCategory !== "All") {
+      filtered = filtered.filter(project => project.category === activeCategory);
+    }
+    
+    // Filter by search query if present
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(project => 
+        project.title.toLowerCase().includes(query) || 
+        project.description.toLowerCase().includes(query) ||
+        project.category.toLowerCase().includes(query) ||
+        project.location.toLowerCase().includes(query)
+      );
+    }
+    
+    setVisibleProjects(filtered);
+    
+    // Reset selected project when category or search changes
+    setSelectedProject(null);
+  }, [activeCategory, searchQuery]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -161,6 +194,17 @@ const ProjectsPage = () => {
           <p className="text-muted-foreground max-w-2xl">
             Explore our portfolio of successful projects across various sectors. Each project showcases our commitment to quality, innovation, and client satisfaction.
           </p>
+          {searchQuery && (
+            <div className="mt-4 p-2 bg-white/50 inline-block rounded">
+              <p>Search results for: <span className="font-medium">{searchQuery}</span></p>
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="text-sm text-primary hover:underline ml-2"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
         </div>
       </div>
       
