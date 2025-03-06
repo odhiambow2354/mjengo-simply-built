@@ -81,7 +81,7 @@ const Contact = () => {
               <ContactCard 
                 icon={Mail} 
                 title="Email Us" 
-                content="info@ujenzibora.com"
+                content="info@mjengosafi.com"
               />
               <ContactCard 
                 icon={MapPin} 
@@ -96,7 +96,7 @@ const Contact = () => {
             </div>
             
             <div className="bg-white rounded-lg overflow-hidden h-[300px] shadow-sm border border-gray-100">
-              <Map center={[36.8219, -1.2921]} zoom={13} height="300px" />
+              <Map />
             </div>
           </div>
           
