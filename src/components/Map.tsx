@@ -1,158 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
+
+import React from 'react';
 import { MapPin } from 'lucide-react';
 
-type MapProps = {
-  center?: [number, number];
-  zoom?: number;
-  height?: string;
-};
-
-const Map = ({ center = [36.8219, -1.2921], zoom = 12, height = '300px' }: MapProps) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState<string | null>(localStorage.getItem('mapbox-token'));
-  const [tokenInput, setTokenInput] = useState('');
-  const [isTokenValid, setIsTokenValid] = useState(false);
-
-  useEffect(() => {
-    if (!mapContainer.current || !mapboxToken) return;
-
-    try {
-      mapboxgl.accessToken = mapboxToken;
-      
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/light-v11',
-        center: center,
-        zoom: zoom,
-      });
-
-      // Add navigation controls
-      map.current.addControl(
-        new mapboxgl.NavigationControl(),
-        'top-right'
-      );
-
-      // Add marker
-      new mapboxgl.Marker({ color: '#f43f5e' })
-        .setLngLat(center)
-        .addTo(map.current);
-
-      // Add success handler
-      map.current.on('load', () => {
-        setIsTokenValid(true);
-      });
-
-      // Add error handler
-      map.current.on('error', (e) => {
-        // Check for authentication error in a type-safe way
-        if (e.error && typeof e.error === 'object' && 'status' in e.error && e.error.status === 401) {
-          setIsTokenValid(false);
-          localStorage.removeItem('mapbox-token');
-          setMapboxToken(null);
-          console.error('Invalid Mapbox token');
-        }
-      });
-
-      // Cleanup
-      return () => {
-        map.current?.remove();
-      };
-    } catch (error) {
-      console.error('Mapbox initialization error:', error);
-      setIsTokenValid(false);
-      localStorage.removeItem('mapbox-token');
-      setMapboxToken(null);
-    }
-  }, [mapboxToken, center, zoom]);
-
-  const handleSaveToken = () => {
-    if (tokenInput) {
-      localStorage.setItem('mapbox-token', tokenInput);
-      setMapboxToken(tokenInput);
-    }
-  };
-
-  if (!mapboxToken) {
-    return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm h-full flex flex-col justify-center items-center text-center">
-        <div className="w-full max-w-lg bg-gray-100 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1551042863-71d0d453d2c9?auto=format&fit=crop&w=800&q=80" 
-            alt="Map of Nairobi"
-            className="w-full h-[300px] object-cover"
-          />
-          <div className="p-4 bg-white">
-            <h3 className="font-medium flex items-center">
+const Map = () => {
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 p-0 shadow-sm h-full flex flex-col justify-center items-center text-center overflow-hidden">
+      <div className="w-full h-full relative">
+        <img 
+          src="https://images.unsplash.com/photo-1551042863-71d0d453d2c9?auto=format&fit=crop&w=800&q=80" 
+          alt="Map of Nairobi"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+          <div className="bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-xs mx-auto">
+            <h3 className="font-medium flex items-center justify-center">
               <MapPin size={16} className="text-primary mr-2" />
               Nairobi, Kenya
             </h3>
             <p className="text-sm text-muted-foreground mt-1">
-              Our headquarters is located in Nairobi CBD
+              123 Business Park, Nairobi CBD
             </p>
           </div>
         </div>
-        <div className="mt-6 w-full max-w-md">
-          <h3 className="text-lg font-semibold mb-4">Activate Interactive Map</h3>
-          <p className="text-muted-foreground mb-6">
-            For an interactive map experience, enter your Mapbox public token. Get one for free at{' '}
-            <a 
-              href="https://mapbox.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary font-medium hover:underline"
-            >
-              mapbox.com
-            </a>
-          </p>
-          <div className="w-full space-y-4">
-            <Input
-              type="text"
-              placeholder="Enter your Mapbox public token"
-              value={tokenInput}
-              onChange={(e) => setTokenInput(e.target.value)}
-            />
-            <Button onClick={handleSaveToken} className="w-full">
-              Activate Interactive Map
-            </Button>
-          </div>
-        </div>
       </div>
-    );
-  }
-
-  if (!isTokenValid && mapboxToken) {
-    return (
-      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm h-full flex flex-col justify-center items-center text-center">
-        <h3 className="text-lg font-semibold mb-4 text-red-500">Invalid Mapbox Token</h3>
-        <p className="text-muted-foreground mb-6">
-          The Mapbox token you provided is invalid. Please try again with a valid token.
-        </p>
-        <div className="w-full max-w-md space-y-4">
-          <Input
-            type="text"
-            placeholder="Enter your Mapbox public token"
-            value={tokenInput}
-            onChange={(e) => setTokenInput(e.target.value)}
-          />
-          <Button onClick={handleSaveToken} className="w-full">
-            Try Again
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div 
-      ref={mapContainer} 
-      className="rounded-lg overflow-hidden h-full w-full" 
-      style={{ height }}
-    />
+    </div>
   );
 };
 

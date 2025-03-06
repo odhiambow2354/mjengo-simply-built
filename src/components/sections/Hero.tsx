@@ -1,13 +1,31 @@
 
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services');
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleConsultation = () => {
+    navigate('/contact');
+    toast({
+      title: "Free Consultation Request",
+      description: "Fill out the form to schedule your free consultation",
+      duration: 5000,
+    });
+  };
+
+  const handleViewProjects = () => {
+    navigate('/project-gallery');
   };
 
   return (
@@ -40,13 +58,14 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="px-8 py-6 text-base">
+            <Button size="lg" className="px-8 py-6 text-base" onClick={handleConsultation}>
               Get Free Consultation
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               className="px-8 py-6 text-base bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              onClick={handleViewProjects}
             >
               View Our Projects
               <ArrowRight size={16} className="ml-2" />

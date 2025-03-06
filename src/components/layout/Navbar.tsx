@@ -1,12 +1,15 @@
 
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +24,21 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+  const handleGetQuote = () => {
+    navigate('/contact');
+    toast({
+      title: "Quote Request",
+      description: "Please fill out the form to receive a detailed quote for your project.",
+      duration: 5000,
+    });
+  };
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
     { name: "Projects", path: "/projects" },
+    { name: "Gallery", path: "/project-gallery" },
     { name: "Testimonials", path: "/testimonials" },
     { name: "Contact", path: "/contact" },
   ];
@@ -56,7 +69,10 @@ const Navbar = () => {
               {item.name}
             </NavLink>
           ))}
-          <Button className="ml-2 px-6 py-2 bg-primary hover:bg-primary/90 transition-all text-white">
+          <Button 
+            className="ml-2 px-6 py-2 bg-primary hover:bg-primary/90 transition-all text-white"
+            onClick={handleGetQuote}
+          >
             Get Quote
           </Button>
         </nav>
@@ -94,7 +110,13 @@ const Navbar = () => {
               {item.name}
             </NavLink>
           ))}
-          <Button className="mt-4 w-full py-6">
+          <Button 
+            className="mt-4 w-full py-6"
+            onClick={() => {
+              handleGetQuote();
+              setMobileMenuOpen(false);
+            }}
+          >
             Get Quote
           </Button>
         </nav>

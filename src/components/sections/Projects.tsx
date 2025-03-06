@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const projects = [
   {
@@ -86,12 +87,12 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
         </span>
         <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
         <p className="text-white/80 text-sm mb-4">{project.description}</p>
-        <a 
-          href={`/projects/${project.id}`} 
+        <Link 
+          to={`/project-gallery?id=${project.id}`} 
           className="inline-flex items-center text-white font-medium text-sm hover:underline"
         >
           View Project <ArrowRight size={14} className="ml-1" />
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -180,7 +181,7 @@ const Projects = () => {
 
         <div className="text-center mt-12">
           <Button asChild className="min-w-[200px]">
-            <a href="/projects">View All Projects</a>
+            <Link to="/project-gallery">View All Projects</Link>
           </Button>
         </div>
       </div>

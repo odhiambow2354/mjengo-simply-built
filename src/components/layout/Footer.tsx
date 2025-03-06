@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           <div>
             <h3 className="text-2xl font-display font-medium mb-4">
-              Ujenzi<span className="text-primary font-semibold">Bora</span>
+              Mjengo<span className="text-primary font-semibold">Safi</span>
             </h3>
             <p className="text-muted-foreground mb-6">
               Design, Costing, Construction – Making Your Dream Home a Reality.
@@ -67,6 +67,11 @@ const Footer = () => {
               <li>
                 <NavLink to="/projects" className="text-muted-foreground hover:text-primary transition-colors">
                   Projects
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/project-gallery" className="text-muted-foreground hover:text-primary transition-colors">
+                  Gallery
                 </NavLink>
               </li>
               <li>
