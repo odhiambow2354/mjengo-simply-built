@@ -1,6 +1,7 @@
 
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AnimatedSection from "@/components/AnimatedSection";
 
 const About = () => {
   const values = [
@@ -15,7 +16,7 @@ const About = () => {
     <section className="section-padding" id="about">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in">
+          <AnimatedSection animation="slide-in-left">
             <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
               About Mjengo Safi
             </div>
@@ -45,24 +46,26 @@ const About = () => {
                 <ArrowRight size={16} className="ml-2" />
               </a>
             </Button>
-          </div>
+          </AnimatedSection>
           
-          <div className="grid grid-cols-2 gap-4 animate-fade-in">
-            <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625" 
-                alt="Modern building" 
-                className="absolute inset-0 h-full w-full object-cover object-center"
-              />
+          <AnimatedSection animation="slide-in-right" delay={200}>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1487958449943-2429e8be8625" 
+                  alt="Modern building" 
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
+              <div className="relative aspect-[3/4] rounded-lg overflow-hidden mt-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1439337153520-7082a56a81f4" 
+                  alt="Construction site" 
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
             </div>
-            <div className="relative aspect-[3/4] rounded-lg overflow-hidden mt-8">
-              <img 
-                src="https://images.unsplash.com/photo-1439337153520-7082a56a81f4" 
-                alt="Construction site" 
-                className="absolute inset-0 h-full w-full object-cover object-center"
-              />
-            </div>
-          </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

@@ -2,16 +2,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { MapPin } from 'lucide-react';
+import { MapPin, Maximize, Minimize } from 'lucide-react';
 import { Button } from './ui/button';
+
+// You would replace this with your actual Mapbox token in production
+const DEFAULT_MAP_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
 const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [mapToken, setMapToken] = useState<string>('');
-  const [tokenEntered, setTokenEntered] = useState(false);
+  const [mapToken, setMapToken] = useState<string>(DEFAULT_MAP_TOKEN);
+  const [tokenEntered, setTokenEntered] = useState(!!DEFAULT_MAP_TOKEN);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Business location coordinates (example for Nairobi CBD)
+  // Business location coordinates (example for a central location)
   const lng = 36.8219;
   const lat = -1.2921;
 
@@ -37,7 +41,7 @@ const Map = () => {
     // Add marker for business location
     const marker = new mapboxgl.Marker({ color: '#2563eb' })
       .setLngLat([lng, lat])
-      .setPopup(new mapboxgl.Popup().setHTML("<h3>Find Us Here</h3><p>123 Business Park</p>"))
+      .setPopup(new mapboxgl.Popup().setHTML("<h3>Find Us Here</h3>"))
       .addTo(map.current);
 
     // Cleanup
@@ -51,6 +55,10 @@ const Map = () => {
     if (mapToken) {
       setTokenEntered(true);
     }
+  };
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
   };
 
   if (!tokenEntered) {
@@ -89,16 +97,21 @@ const Map = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-0 shadow-sm h-full flex flex-col">
+    <div className={`bg-white rounded-lg border border-gray-200 p-0 shadow-sm flex flex-col relative ${isFullscreen ? 'fixed inset-0 z-50 rounded-none' : 'h-full'}`}>
+      <Button 
+        variant="outline" 
+        size="icon" 
+        className="absolute top-2 right-2 z-10 bg-white shadow-sm" 
+        onClick={toggleFullscreen}
+      >
+        {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+      </Button>
       <div ref={mapContainer} className="w-full h-full rounded-lg" />
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-xs mx-auto">
         <h3 className="font-medium flex items-center justify-center">
           <MapPin size={16} className="text-primary mr-2" />
           Find Us Here
         </h3>
-        <p className="text-sm text-muted-foreground mt-1">
-          123 Business Park, Nairobi CBD
-        </p>
       </div>
     </div>
   );

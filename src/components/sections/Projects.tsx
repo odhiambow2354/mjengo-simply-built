@@ -1,8 +1,8 @@
-
 import { useState, useRef, useEffect } from "react";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import ProjectDetail from "@/components/ProjectDetail";
 
 const projects = [
   {
@@ -10,14 +10,32 @@ const projects = [
     title: "Modern Residential Villa",
     category: "Residential",
     image: "https://images.unsplash.com/photo-1439337153520-7082a56a81f4",
-    description: "A luxurious residential project featuring contemporary design and premium finishes."
+    description: "A luxurious residential project featuring contemporary design and premium finishes.",
+    date: "June 2023",
+    client: "Private Owner",
+    location: "Karen, Nairobi",
+    scope: [
+      "Architectural design and planning",
+      "Interior design and decoration",
+      "Landscaping and outdoor amenities",
+      "Smart home integration"
+    ]
   },
   {
     id: 2,
     title: "Corporate Office Complex",
     category: "Commercial",
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    description: "State-of-the-art office complex designed for optimal productivity and employee comfort."
+    description: "State-of-the-art office complex designed for optimal productivity and employee comfort.",
+    date: "March 2023",
+    client: "ABC Corporation",
+    location: "Westlands, Nairobi",
+    scope: [
+      "Architectural planning for 10,000 sqm space",
+      "Collaborative workspaces and meeting rooms",
+      "Employee recreational areas",
+      "Energy-efficient lighting and HVAC systems"
+    ]
   },
   {
     id: 3,
@@ -72,7 +90,7 @@ const projects = [
 
 const categories = ["All", "Residential", "Commercial", "Hospitality", "Institutional", "Personal Homes"];
 
-const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
+const ProjectCard = ({ project, onClick }: { project: typeof projects[0], onClick: () => void }) => {
   return (
     <div className="group relative overflow-hidden rounded-lg aspect-[4/3] animate-fade-in">
       <img 
@@ -87,12 +105,24 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
         </span>
         <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
         <p className="text-white/80 text-sm mb-4">{project.description}</p>
-        <Link 
-          to={`/projects?id=${project.id}`} 
-          className="inline-flex items-center text-white font-medium text-sm hover:underline"
-        >
-          View Project <ArrowRight size={14} className="ml-1" />
-        </Link>
+        <div className="flex space-x-4">
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClick();
+            }}
+            className="inline-flex items-center text-white font-medium text-sm hover:underline"
+          >
+            View Details <ArrowRight size={14} className="ml-1" />
+          </button>
+          <Link 
+            to={`/projects?id=${project.id}`} 
+            className="inline-flex items-center text-white font-medium text-sm hover:underline"
+          >
+            View Project <ArrowRight size={14} className="ml-1" />
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -101,6 +131,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleProjects, setVisibleProjects] = useState(projects);
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   
   const scrollLeft = () => {
@@ -113,6 +144,10 @@ const Projects = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
     }
+  };
+
+  const handleProjectClick = (project: typeof projects[0]) => {
+    setSelectedProject(project);
   };
 
   useEffect(() => {
@@ -175,7 +210,11 @@ const Projects = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visibleProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard 
+              key={project.id} 
+              project={project} 
+              onClick={() => handleProjectClick(project)}
+            />
           ))}
         </div>
 
@@ -185,6 +224,13 @@ const Projects = () => {
           </Button>
         </div>
       </div>
+      
+      {selectedProject && (
+        <ProjectDetail 
+          project={selectedProject} 
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </section>
   );
 };
