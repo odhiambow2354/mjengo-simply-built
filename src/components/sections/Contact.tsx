@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,12 +35,31 @@ const Contact = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const emailContent = `
+        Name: ${formData.name}
+        Email: ${formData.email}
+        Phone: ${formData.phone || 'Not provided'}
+        Subject: ${formData.subject}
+        Message: ${formData.message}
+      `;
+      
+      const mailtoLink = `mailto:iamremoteworker@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailContent)}`;
+      
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      iframe.contentWindow?.location.href = mailtoLink;
+      
+      setTimeout(() => {
+        iframe.remove();
+      }, 100);
+      
       toast({
         title: "Message Sent",
         description: "Thank you for contacting us. We'll get back to you soon!",
@@ -55,9 +73,17 @@ const Contact = () => {
         subject: "",
         message: ""
       });
-      
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
