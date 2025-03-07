@@ -3,6 +3,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Maximize, Minimize, Building } from 'lucide-react';
 import { Button } from './ui/button';
 
+// Type definitions for Google Maps
+type GoogleMap = google.maps.Map;
+type LatLngLiteral = google.maps.LatLngLiteral;
+type MapOptions = google.maps.MapOptions;
+type Marker = google.maps.Marker;
+type InfoWindow = google.maps.InfoWindow;
+
 const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,8 +26,8 @@ const Map = () => {
       if (!mapContainer.current || !window.google) return;
       
       try {
-        const location = { lat, lng };
-        const mapOptions = {
+        const location: LatLngLiteral = { lat, lng };
+        const mapOptions: MapOptions = {
           center: location,
           zoom: 14,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -28,17 +35,17 @@ const Map = () => {
           streetViewControl: true,
         };
         
-        const map = new google.maps.Map(mapContainer.current, mapOptions);
+        const map: GoogleMap = new google.maps.Map(mapContainer.current, mapOptions);
         
         // Add marker for business location
-        const marker = new google.maps.Marker({
+        const marker: Marker = new google.maps.Marker({
           position: location,
           map: map,
           title: "Our Construction Office"
         });
         
         // Add info window
-        const infoWindow = new google.maps.InfoWindow({
+        const infoWindow: InfoWindow = new google.maps.InfoWindow({
           content: "<h3>Our Construction Office</h3>"
         });
         
@@ -124,7 +131,42 @@ const Map = () => {
 // Add TypeScript global declaration for Google Maps
 declare global {
   interface Window {
-    google: any;
+    google: typeof google;
+  }
+  
+  namespace google.maps {
+    interface Map {}
+    interface MapOptions {
+      center: LatLngLiteral;
+      zoom: number;
+      mapTypeId?: MapTypeId;
+      mapTypeControl?: boolean;
+      streetViewControl?: boolean;
+    }
+    interface LatLngLiteral {
+      lat: number;
+      lng: number;
+    }
+    interface Marker {
+      addListener(event: string, handler: () => void): void;
+    }
+    interface InfoWindow {
+      open(map: Map, marker: Marker): void;
+    }
+    enum MapTypeId {
+      ROADMAP = "roadmap",
+      SATELLITE = "satellite",
+      HYBRID = "hybrid",
+      TERRAIN = "terrain"
+    }
+    interface MarkerOptions {
+      position: LatLngLiteral;
+      map: Map;
+      title?: string;
+    }
+    interface InfoWindowOptions {
+      content: string;
+    }
   }
 }
 
