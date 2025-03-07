@@ -1,67 +1,71 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { Maximize, Minimize, Building } from 'lucide-react';
 import { Button } from './ui/button';
 
-// You would replace this with your actual Mapbox token in production
-const DEFAULT_MAP_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.eyJ1IjoibG92YWJsZS1kZWZhdWx0IiwiYSI6ImNscTFhZXZ5NTBldTYya3A2a3N2OHZuNWIifQ.a4PGK_vinRCM6Mhk-jmfcA';
-
 const Map = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [mapError, setMapError] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Business location coordinates (example for a central location)
-  const lng = 36.8219;
   const lat = -1.2921;
+  const lng = 36.8219;
 
   useEffect(() => {
-    if (!mapContainer.current) return;
-
-    try {
-      // Initialize map with default token
-      mapboxgl.accessToken = DEFAULT_MAP_TOKEN;
+    // Function to initialize the map
+    const initMap = () => {
+      if (!mapContainer.current || !window.google) return;
       
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [lng, lat],
-        zoom: 14,
-      });
-
-      // Add navigation controls
-      map.current.addControl(
-        new mapboxgl.NavigationControl(),
-        'top-right'
-      );
-
-      // Add marker for business location
-      const marker = new mapboxgl.Marker({ color: '#2563eb' })
-        .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup().setHTML("<h3>Our Construction Office</h3>"))
-        .addTo(map.current);
-
-      map.current.on('load', () => {
-        setIsMapLoaded(true);
-      });
-
-      map.current.on('error', () => {
+      try {
+        const location = { lat, lng };
+        const mapOptions = {
+          center: location,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: true,
+          streetViewControl: true,
+        };
+        
+        const map = new google.maps.Map(mapContainer.current, mapOptions);
+        
+        // Add marker for business location
+        const marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: "Our Construction Office"
+        });
+        
+        // Add info window
+        const infoWindow = new google.maps.InfoWindow({
+          content: "<h3>Our Construction Office</h3>"
+        });
+        
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+        
+        setIsLoaded(true);
+      } catch (error) {
+        console.error("Error initializing map:", error);
         setMapError(true);
-      });
-    } catch (error) {
-      console.error("Error initializing map:", error);
-      setMapError(true);
-    }
-
-    // Cleanup
-    return () => {
-      map.current?.remove();
+      }
     };
-  }, []);
+
+    // Load Google Maps script if not already loaded
+    if (!window.google) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      script.onload = initMap;
+      script.onerror = () => setMapError(true);
+      document.head.appendChild(script);
+    } else {
+      initMap();
+    }
+  }, [lat, lng]);
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -73,7 +77,7 @@ const Map = () => {
       <div className="bg-white rounded-lg border border-gray-200 p-0 shadow-sm h-full flex flex-col relative">
         <div className="w-full h-full rounded-lg overflow-hidden relative">
           <img 
-            src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s+2563eb(${lng},${lat})/${lng},${lat},14,0/800x600?access_token=${DEFAULT_MAP_TOKEN}`} 
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=800x600&markers=color:red|${lat},${lng}&key=`} 
             alt="Static Map"
             className="w-full h-full object-cover"
             onError={() => {
@@ -116,5 +120,12 @@ const Map = () => {
     </div>
   );
 };
+
+// Add TypeScript global declaration for Google Maps
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 
 export default Map;
