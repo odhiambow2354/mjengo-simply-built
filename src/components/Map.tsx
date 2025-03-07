@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { MapPin, Maximize, Minimize } from 'lucide-react';
+import { Maximize, Minimize, Building } from 'lucide-react';
 import { Button } from './ui/button';
 
 // You would replace this with your actual Mapbox token in production
@@ -42,7 +42,7 @@ const Map = () => {
       // Add marker for business location
       const marker = new mapboxgl.Marker({ color: '#2563eb' })
         .setLngLat([lng, lat])
-        .setPopup(new mapboxgl.Popup().setHTML("<h3>Find Us Here</h3>"))
+        .setPopup(new mapboxgl.Popup().setHTML("<h3>Our Construction Office</h3>"))
         .addTo(map.current);
 
       map.current.on('load', () => {
@@ -87,8 +87,8 @@ const Map = () => {
           />
           <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-xs mx-auto">
             <h3 className="font-medium flex items-center justify-center">
-              <MapPin size={16} className="text-primary mr-2" />
-              Find Us Here
+              <Building size={16} className="text-primary mr-2" />
+              Our Construction Office
             </h3>
           </div>
         </div>
@@ -106,11 +106,11 @@ const Map = () => {
       >
         {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
       </Button>
-      <div ref={mapContainer} className="w-full h-full rounded-lg" />
+      <div ref={mapContainer} className="w-full h-full rounded-lg overflow-hidden" />
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm p-4 rounded-lg max-w-xs mx-auto">
         <h3 className="font-medium flex items-center justify-center">
-          <MapPin size={16} className="text-primary mr-2" />
-          Find Us Here
+          <Building size={16} className="text-primary mr-2" />
+          Our Construction Office
         </h3>
       </div>
     </div>
