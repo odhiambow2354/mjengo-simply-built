@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Calendar, Tag, ArrowLeft } from 'lucide-react';
+import { X, Calendar, Tag, ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface ProjectDetailProps {
