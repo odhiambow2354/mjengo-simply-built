@@ -71,7 +71,9 @@ const Contact = () => {
       }
 
       setTimeout(() => {
-        iframe.remove();
+        if (iframe) {
+          iframe.remove();
+        }
       }, 100);
 
       toast({

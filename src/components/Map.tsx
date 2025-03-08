@@ -35,17 +35,17 @@ const Map = () => {
           streetViewControl: true,
         };
         
-        const map: GoogleMap = new google.maps.Map(mapContainer.current, mapOptions);
+        const map = new window.google.maps.Map(mapContainer.current, mapOptions);
         
         // Add marker for business location
-        const marker: Marker = new google.maps.Marker({
+        const marker = new window.google.maps.Marker({
           position: location,
           map: map,
           title: "Our Construction Office"
         });
         
         // Add info window
-        const infoWindow: InfoWindow = new google.maps.InfoWindow({
+        const infoWindow = new window.google.maps.InfoWindow({
           content: "<h3>Our Construction Office</h3>"
         });
         
