@@ -2,6 +2,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Contact from "@/components/sections/Contact";
+import ChatBot from "@/components/ChatBot";
 import { useEffect } from "react";
 
 const ContactPage = () => {
@@ -25,6 +26,7 @@ const ContactPage = () => {
         <Contact />
       </main>
       <Footer />
+      <ChatBot />
     </div>
   );
 };
