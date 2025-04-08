@@ -54,4 +54,4 @@ This project is built with .
 
 ## How can I deploy this project?
 
-Just use your pesonal domain or the free hosting sites like vercel
+Use your pesonal domain or the free hosting sites like vercel
