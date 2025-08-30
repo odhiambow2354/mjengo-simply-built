@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import twinstoneLogo from "@/assets/twinstone.jpeg"; // ✅ correct import
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,10 +29,11 @@ const Navbar = () => {
   };
 
   const handleGetQuote = () => {
-    navigate('/contact');
+    navigate("/contact");
     toast({
       title: "Quote Request",
-      description: "Please fill out the form to receive a detailed quote for your project.",
+      description:
+        "Please fill out the form to receive a detailed quote for your project.",
       duration: 5000,
     });
   };
@@ -58,49 +59,64 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: "Home", path: "/" },
+    // { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
-    { 
-      name: "Projects", 
+    {
+      name: "Projects",
       path: "/projects",
       hasSubmenu: true,
       submenu: [
         { name: "All Projects", path: "/projects" },
-        { name: "Gallery", path: "/project-gallery" }
-      ]
+        { name: "Gallery", path: "/project-gallery" },
+      ],
     },
     { name: "Testimonials", path: "/testimonials" },
     { name: "Contact", path: "/contact" },
   ];
 
   return (
-    <header 
+    <header
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-6"
+        isScrolled
+          ? "bg-white/90 backdrop-blur-md shadow-sm py-3"
+          : "bg-transparent py-6"
       }`}
     >
       <div className="container flex items-center justify-between">
-        <NavLink to="/" className="text-foreground font-display text-2xl font-medium">
-          Mjengo<span className="text-primary font-semibold">Safi</span>
+        {/* ✅ Logo using imported image */}
+        <NavLink to="/" className="flex items-center gap-2">
+          <img
+            src={twinstoneLogo}
+            alt="MjengoSafi Logo"
+            className="h-10 w-40 object-cover  shadow-sm"
+            style={{ borderRadius: 0 }}
+          />
         </NavLink>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
+          {navItems.map((item) =>
             item.hasSubmenu ? (
               <div key={item.name} className="relative group">
-                <button 
+                <button
                   className="text-sm font-medium transition-all relative flex items-center gap-1 text-foreground hover:text-primary"
                   onClick={toggleProjectsMenu}
                   onMouseEnter={() => setProjectsOpen(true)}
                 >
                   {item.name}
-                  <ChevronDown size={14} className={`transition-transform ${projectsOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform ${
+                      projectsOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
-                <div 
+                <div
                   className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden transition-all origin-top-left ${
-                    projectsOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
+                    projectsOpen
+                      ? "scale-100 opacity-100"
+                      : "scale-95 opacity-0 pointer-events-none"
                   }`}
                   onMouseLeave={() => setProjectsOpen(false)}
                 >
@@ -108,9 +124,9 @@ const Navbar = () => {
                     <NavLink
                       key={subItem.name}
                       to={subItem.path}
-                      className={({ isActive }) => 
+                      className={({ isActive }) =>
                         `block px-4 py-2 text-sm hover:bg-gray-50 ${
-                          isActive ? 'bg-gray-50 text-primary' : 'text-gray-700'
+                          isActive ? "bg-gray-50 text-primary" : "text-gray-700"
                         }`
                       }
                       onClick={() => setProjectsOpen(false)}
@@ -124,7 +140,7 @@ const Navbar = () => {
               <NavLink
                 key={item.name}
                 to={item.path}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `text-sm font-medium transition-all relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
                     isActive ? "text-primary after:w-full" : "text-foreground"
                   }`
@@ -133,7 +149,7 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             )
-          ))}
+          )}
           <button
             onClick={toggleSearch}
             className="text-foreground hover:text-primary transition-colors"
@@ -141,7 +157,7 @@ const Navbar = () => {
           >
             <Search size={20} />
           </button>
-          <Button 
+          <Button
             className="ml-2 px-6 py-2 bg-primary hover:bg-primary/90 transition-all text-white"
             onClick={handleGetQuote}
           >
@@ -182,27 +198,34 @@ const Navbar = () => {
               autoFocus
             />
             <Button type="submit">Search</Button>
-            <Button variant="outline" type="button" onClick={toggleSearch}>Cancel</Button>
+            <Button variant="outline" type="button" onClick={toggleSearch}>
+              Cancel
+            </Button>
           </form>
         </div>
       )}
 
       {/* Mobile Navigation */}
-      <div 
+      <div
         className={`fixed inset-0 bg-white z-40 pt-20 px-6 transform transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden`}
       >
         <nav className="flex flex-col space-y-6">
-          {navItems.map((item) => (
+          {navItems.map((item) =>
             item.hasSubmenu ? (
               <div key={item.name} className="space-y-2">
-                <button 
+                <button
                   className="text-lg font-medium transition-all flex items-center gap-1"
                   onClick={toggleProjectsMenu}
                 >
                   {item.name}
-                  <ChevronDown size={16} className={`transition-transform ${projectsOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform ${
+                      projectsOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
                 {projectsOpen && (
                   <div className="pl-4 space-y-2">
@@ -210,9 +233,9 @@ const Navbar = () => {
                       <NavLink
                         key={subItem.name}
                         to={subItem.path}
-                        className={({ isActive }) => 
+                        className={({ isActive }) =>
                           `block py-1 text-base ${
-                            isActive ? 'text-primary' : 'text-gray-700'
+                            isActive ? "text-primary" : "text-gray-700"
                           }`
                         }
                         onClick={() => {
@@ -230,7 +253,7 @@ const Navbar = () => {
               <NavLink
                 key={item.name}
                 to={item.path}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `text-lg font-medium transition-all ${
                     isActive ? "text-primary" : "text-foreground"
                   }`
@@ -240,8 +263,8 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             )
-          ))}
-          <Button 
+          )}
+          <Button
             className="mt-4 w-full py-6"
             onClick={() => {
               handleGetQuote();
